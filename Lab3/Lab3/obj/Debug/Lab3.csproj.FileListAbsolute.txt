@@ -39,7 +39,10 @@ C:\Users\JoseCarlos\Documents\GitHub\Lab3\Lab3\Lab3\bin\System.Web.Razor.dll
 C:\Users\JoseCarlos\Documents\GitHub\Lab3\Lab3\Lab3\bin\System.Web.WebPages.Deployment.dll
 C:\Users\JoseCarlos\Documents\GitHub\Lab3\Lab3\Lab3\bin\System.Web.WebPages.dll
 C:\Users\JoseCarlos\Documents\GitHub\Lab3\Lab3\Lab3\bin\System.Web.WebPages.Razor.dll
+C:\Users\JoseCarlos\Documents\GitHub\Lab3\Lab3\Lab3\bin\TDA.dll
+C:\Users\JoseCarlos\Documents\GitHub\Lab3\Lab3\Lab3\bin\TDALibrary.dll
 C:\Users\JoseCarlos\Documents\GitHub\Lab3\Lab3\Lab3\bin\WebGrease.dll
+C:\Users\JoseCarlos\Documents\GitHub\Lab3\Lab3\Lab3\bin\TDA.pdb
 C:\Users\JoseCarlos\Documents\GitHub\Lab3\Lab3\Lab3\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
 C:\Users\JoseCarlos\Documents\GitHub\Lab3\Lab3\Lab3\bin\System.Web.Helpers.xml
 C:\Users\JoseCarlos\Documents\GitHub\Lab3\Lab3\Lab3\bin\System.Web.Mvc.xml

@@ -3,16 +3,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Net;
+using System.IO;
+using System.Data;
+using Lab3.DBContext;
+using Newtonsoft.Json;
 using TDA;
+using Lab3.Models;
 
 namespace Lab3.Controllers
 {
     public class PartidoController : Controller
     {
+        DefaultConnection db = DefaultConnection.getInstance;
+       
         // GET: Partido
         public ActionResult Index()
         {
-            return View();
+            return View(db.Arbolito.ToList());
         }
 
         // GET: Partido/Details/5
@@ -29,12 +37,12 @@ namespace Lab3.Controllers
 
         // POST: Partido/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create([Bind(Include = "NoPartido,FechaPartido,Grupo,Pais1,Pais2,Estadio")] Partido Partido)
         {
             try
             {
                 // TODO: Add insert logic here
-
+                db.Arbolito.Insertar(Partido);
                 return RedirectToAction("Index");
             }
             catch
