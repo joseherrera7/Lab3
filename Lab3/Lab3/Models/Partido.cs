@@ -8,13 +8,13 @@ namespace Lab3.Models
 {
     public class Partido
     {
-        [Key]
-        int NoPartido { get; set; }
-        [Key]
-        DateTime FechaPartido { get; set; }
-        string Grupo { get; set; }
-        string Pais1 { get; set; }
-        string Pais2 { get; set; }
-        string Estadio { get; set; }
+        
+        public int NoPartido { get; set; }
+        
+        public DateTime FechaPartido { get; set; }
+        public string Grupo { get; set; }
+        public string Pais1 { get; set; }
+        public string Pais2 { get; set; }
+        public string Estadio { get; set; }
     }
 }

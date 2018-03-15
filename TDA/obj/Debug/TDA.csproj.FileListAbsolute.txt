@@ -18,3 +18,9 @@ C:\Users\JoseCarlos\Documents\GitHub\Lab3\TDA\bin\Debug\TDALibrary.dll
 C:\Users\JoseCarlos\Documents\GitHub\Lab3\TDA\obj\Debug\TDA.csprojResolveAssemblyReference.cache
 C:\Users\JoseCarlos\Documents\GitHub\Lab3\TDA\obj\Debug\TDA.dll
 C:\Users\JoseCarlos\Documents\GitHub\Lab3\TDA\obj\Debug\TDA.pdb
+C:\Users\Renato\Documents\GitHub\Lab3\TDA\bin\Debug\TDA.dll
+C:\Users\Renato\Documents\GitHub\Lab3\TDA\bin\Debug\TDA.pdb
+C:\Users\Renato\Documents\GitHub\Lab3\TDA\bin\Debug\TDALibrary.dll
+C:\Users\Renato\Documents\GitHub\Lab3\TDA\obj\Debug\TDA.csprojResolveAssemblyReference.cache
+C:\Users\Renato\Documents\GitHub\Lab3\TDA\obj\Debug\TDA.dll
+C:\Users\Renato\Documents\GitHub\Lab3\TDA\obj\Debug\TDA.pdb
