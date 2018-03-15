@@ -22,17 +22,17 @@ namespace TDA
         /// <summary>
         /// Dato almacenado
         /// </summary>
-        T Dato { get; set; }
+        T valor { get; set; }
 
         /// <summary>
         /// Arbol binario izquierda
         /// </summary>
-        IArbolBinario<T> HijoIzquierdo { get; set; }
+        IArbolBinario<T> izquierdo { get; set; }
 
         /// <summary>
         /// Arbol binario de la derecha
         /// </summary>
-        IArbolBinario<T> HijoDerecho { get; set; }
+        IArbolBinario<T> derecho { get; set; }
 
         /// <summary>
         /// Arbol padre

@@ -6,14 +6,14 @@ using TDALibrary;
 
 namespace TDA
 {
-    public class ArbolAVLBase<T, K>: ABinBusqueda<T, K>, IArbolAVL<T,K>
+    public class ArbolAVLBase<T, K> : ABinBusqueda<T, K>, IArbolAVL<T, K>
     {
         /// <summary>
         /// Properti que devuelve la Raíz de un árbol, es de solo lectura
         /// </summary>
         public ArbolBinarioBase<T> Raiz
         {
-            get 
+            get
             {
                 return this._raiz;
             }
@@ -23,7 +23,7 @@ namespace TDA
         /// Busca, devuelve y elimina un nodo del arbol, teniendo cuidado de que el Arbol siga cumpliendo con las caracteristicas de que sea
         /// arbol AVL, el método de eliminación utilizado es reemplazando el menor del mayor
         /// </summary>
-        /// <param name="llave">El dato representativo</param>
+        /// <param name="llave">El valor representativo</param>
         /// <returns>Conjunto de datos del nodo eliminado.</returns>
         public T Eliminar(K llave)
         {
@@ -44,7 +44,7 @@ namespace TDA
 
                 while (!encontrado)
                 {
-                    K llaveSiguiente = this.FuncionObtenerLlave(siguiente.Dato);
+                    K llaveSiguiente = this.FuncionObtenerLlave(siguiente.valor);
 
                     // > 0 si el primero es mayor < 0 si el primero es menor y 0 si son iguales
                     int comparacion = this.FuncionCompararLlave(llave, llaveSiguiente);
@@ -52,22 +52,22 @@ namespace TDA
                     if (comparacion == 0)
                     {
 
-                        if ((siguiente.HijoDerecho == null) && (siguiente.HijoIzquierdo == null)) //Si es una hoja
+                        if ((siguiente.derecho == null) && (siguiente.izquierdo == null)) //Si es una hoja
                         {
-                            T miDato = siguiente.Dato;
+                            T miDato = siguiente.valor;
                             if ((padre != null))
                             {
                                 if (EsHijoIzquierdo)
                                 {
-                                    padre.HijoIzquierdo = null;
+                                    padre.izquierdo = null;
                                 }
                                 else
                                 {
-                                    padre.HijoDerecho = null;
+                                    padre.derecho = null;
                                 }
                                 //EsHijoIzquierdo, se refiere al hijo que elimine
                                 Equilibrar(padre, EsHijoIzquierdo, false); //Le paso el padre, es hijo izquierdo falso o verdadero, es nuevo = false
-                                
+
                             }
                             else //Si padre es null entonces es la raiz
                             {
@@ -78,53 +78,53 @@ namespace TDA
                         }
                         else
                         {
-                            if (siguiente.HijoDerecho == null) //Si solo tiene rama izquierda
+                            if (siguiente.derecho == null) //Si solo tiene rama izquierda
                             {
-                                T miDato = siguiente.Dato;
+                                T miDato = siguiente.valor;
                                 if ((padre != null))
                                 {
                                     if (EsHijoIzquierdo)
                                     {
-                                        padre.HijoIzquierdo = siguiente.HijoIzquierdo;
-                                        siguiente.HijoIzquierdo.Padre = padre;
+                                        padre.izquierdo = siguiente.izquierdo;
+                                        siguiente.izquierdo.Padre = padre;
                                     }
                                     else
                                     {
-                                        padre.HijoDerecho = siguiente.HijoIzquierdo;
-                                        siguiente.HijoIzquierdo.Padre = padre;
+                                        padre.derecho = siguiente.izquierdo;
+                                        siguiente.izquierdo.Padre = padre;
                                     }
 
                                     Equilibrar(padre, EsHijoIzquierdo, false);
                                 }
                                 else
                                 {
-                                    siguiente.HijoIzquierdo.Padre = null;
-                                    _raiz = siguiente.HijoIzquierdo as ArbolBinarioBase<T>;
+                                    siguiente.izquierdo.Padre = null;
+                                    _raiz = siguiente.izquierdo as ArbolBinarioBase<T>;
                                 }
 
                                 return miDato;
                             }
-                            else if (siguiente.HijoIzquierdo == null)  //Si solo tiene rama derecha
+                            else if (siguiente.izquierdo == null)  //Si solo tiene rama derecha
                             {
-                                T miDato = siguiente.Dato;
+                                T miDato = siguiente.valor;
                                 if ((padre != null))
                                 {
                                     if (EsHijoIzquierdo)
                                     {
-                                        padre.HijoIzquierdo = siguiente.HijoDerecho;
-                                        siguiente.HijoDerecho.Padre = padre;
+                                        padre.izquierdo = siguiente.derecho;
+                                        siguiente.derecho.Padre = padre;
                                     }
                                     else
                                     {
-                                        padre.HijoDerecho = siguiente.HijoDerecho;
-                                        siguiente.HijoDerecho.Padre = padre;
+                                        padre.derecho = siguiente.derecho;
+                                        siguiente.derecho.Padre = padre;
                                     }
                                     Equilibrar(padre, EsHijoIzquierdo, false);
                                 }
                                 else
                                 {
-                                    siguiente.HijoDerecho.Padre = null;
-                                    _raiz = siguiente.HijoDerecho as ArbolBinarioBase<T>;
+                                    siguiente.derecho.Padre = null;
+                                    _raiz = siguiente.derecho as ArbolBinarioBase<T>;
                                 }
 
                                 return miDato;
@@ -132,12 +132,12 @@ namespace TDA
                             else  //Tiene ambas ramas el que lo sustituirá será el mas izquierdo de los derechos
                             {
                                 ArbolBinarioBase<T> aEliminar = siguiente;
-                                siguiente = siguiente.HijoDerecho as ArbolBinarioBase<T>;
+                                siguiente = siguiente.derecho as ArbolBinarioBase<T>;
                                 int cont = 0;
-                                while (siguiente.HijoIzquierdo != null)
+                                while (siguiente.izquierdo != null)
                                 {
                                     padre = siguiente;
-                                    siguiente = siguiente.HijoIzquierdo as ArbolBinarioBase<T>;
+                                    siguiente = siguiente.izquierdo as ArbolBinarioBase<T>;
                                     cont++;
                                 }
 
@@ -145,21 +145,21 @@ namespace TDA
                                 {
                                     if (padre != null)
                                     {
-                                        T miDato = aEliminar.Dato;
-                                        aEliminar.Dato = siguiente.Dato;
-                                        if (siguiente.HijoDerecho == null)
+                                        T miDato = aEliminar.valor;
+                                        aEliminar.valor = siguiente.valor;
+                                        if (siguiente.derecho == null)
                                         {
-                                            padre.HijoIzquierdo = null;
+                                            padre.izquierdo = null;
                                             Equilibrar(padre, true, false);
                                         }
                                         else
                                         {
-                                            padre.HijoIzquierdo = siguiente.HijoDerecho;
-                                            siguiente.HijoDerecho.Padre = padre;
+                                            padre.izquierdo = siguiente.derecho;
+                                            siguiente.derecho.Padre = padre;
                                             Equilibrar(padre, true, false);
                                         }
 
-                                        
+
                                         return miDato;
                                     }
 
@@ -167,8 +167,8 @@ namespace TDA
                                 else
                                 {
                                     //Le estoy asignando un nuevo hijo a Siguiente
-                                    siguiente.HijoIzquierdo = aEliminar.HijoIzquierdo;
-                                    aEliminar.HijoIzquierdo.Padre = siguiente;
+                                    siguiente.izquierdo = aEliminar.izquierdo;
+                                    aEliminar.izquierdo.Padre = siguiente;
                                     siguiente.FactorBalance = aEliminar.FactorBalance;
                                     siguiente.Padre = aEliminar.Padre;
 
@@ -176,23 +176,23 @@ namespace TDA
                                     {
                                         if (EsHijoIzquierdo)
                                         {
-                                            padre.HijoIzquierdo = aEliminar.HijoDerecho;
+                                            padre.izquierdo = aEliminar.derecho;
                                             Equilibrar(siguiente, false, false);
                                         }
                                         else
                                         {
-                                            padre.HijoDerecho = aEliminar.HijoDerecho;
+                                            padre.derecho = aEliminar.derecho;
                                             Equilibrar(siguiente, false, false);
                                         }
                                     }
                                     else //Es la raiz
                                     {
-                                        _raiz = aEliminar.HijoDerecho as ArbolBinarioBase<T>;
+                                        _raiz = aEliminar.derecho as ArbolBinarioBase<T>;
                                         Equilibrar(_raiz, false, false);
                                     }
 
 
-                                    return aEliminar.Dato;
+                                    return aEliminar.valor;
                                 }
 
                             }
@@ -202,7 +202,7 @@ namespace TDA
                     {
                         if (comparacion > 0)
                         {
-                            if (siguiente.HijoDerecho == null)
+                            if (siguiente.derecho == null)
                             {
                                 return default(T);
                             }
@@ -210,13 +210,13 @@ namespace TDA
                             {
                                 padre = siguiente;
                                 EsHijoIzquierdo = false;
-                                siguiente = siguiente.HijoDerecho as ArbolBinarioBase<T>;
+                                siguiente = siguiente.derecho as ArbolBinarioBase<T>;
                             }
 
                         }
                         else //menor que 0
                         {
-                            if (siguiente.HijoIzquierdo == null)
+                            if (siguiente.izquierdo == null)
                             {
                                 return default(T);
                             }
@@ -224,78 +224,78 @@ namespace TDA
                             {
                                 padre = siguiente;
                                 EsHijoIzquierdo = true;
-                                siguiente = siguiente.HijoIzquierdo as ArbolBinarioBase<T>;
+                                siguiente = siguiente.izquierdo as ArbolBinarioBase<T>;
                             }
                         }
                     }//Fin del if comparación
 
                 } //Fin del ciclo
 
-            }//Fin del if que verifica que no exista ningún dato.
+            }//Fin del if que verifica que no exista ningún valor.
 
             return default(T);
         }
 
         /// <summary>
-        /// Inserta un Dato en su posición especifica cumpliendo con las reglas de los Arboles binarios de búsqueda.
+        /// Inserta un valor en su posición especifica cumpliendo con las reglas de los Arboles binarios de búsqueda.
         /// </summary>
-        /// <param name="dato">El dato que se desea insertar.</param>
-        public void Insertar(T dato)
+        /// <param name="valor">El valor que se desea insertar.</param>
+        public void Insertar(T valor)
         {
             if ((this.FuncionCompararLlave == null) || (this.FuncionObtenerLlave == null))
                 throw new Exception("No se han inicializado las funciones para operar la estructura");
 
-            if (dato == null)
-                throw new ArgumentNullException("El dato ingresado está vacio");
+            if (valor == null)
+                throw new ArgumentNullException("El valor ingresado está vacio");
 
             if (_raiz == null)
-                _raiz = new ArbolBinarioBase<T>(dato);
+                _raiz = new ArbolBinarioBase<T>(valor);
             else
             {
                 ArbolBinarioBase<T> siguiente = _raiz;
-                K llaveInsertar = this.FuncionObtenerLlave(dato);
+                K llaveInsertar = this.FuncionObtenerLlave(valor);
                 bool yaInsertado = false;
 
                 while (!yaInsertado)
                 {
-                    K llaveSiguiente = this.FuncionObtenerLlave(siguiente.Dato);
+                    K llaveSiguiente = this.FuncionObtenerLlave(siguiente.valor);
 
                     // > 0 si el primero es mayor < 0 si el primero es menor y 0 si son iguales
                     int comparacion = this.FuncionCompararLlave(llaveInsertar, llaveSiguiente);
 
                     if (comparacion == 0)
                     {
-                        throw new Exception("El dato ingresado posee una llave que ya existe en la estructura");
+                        throw new Exception("El valor ingresado posee una llave que ya existe en la estructura");
                     }
                     else
                     {
                         if (comparacion > 0)
                         {
-                            if (siguiente.HijoDerecho == null)
+                            if (siguiente.derecho == null)
                             {
-                                siguiente.HijoDerecho = new ArbolBinarioBase<T>(dato);
-                                siguiente.HijoDerecho.Padre = siguiente;
+                                siguiente.derecho = new ArbolBinarioBase<T>(valor);
+                                siguiente.derecho.Padre = siguiente;
                                 Equilibrar(siguiente, false, true); //es Izquierdo = false, es nuevo = true;
                                 yaInsertado = true;
                             }
                             else
                             {
-                                siguiente = siguiente.HijoDerecho as ArbolBinarioBase<T>;
+                                siguiente = siguiente.derecho as ArbolBinarioBase<T>;
                             }
 
                         }
                         else
                         {
-                            if (siguiente.HijoIzquierdo == null)
+                            if (siguiente.izquierdo == null)
                             {
-                                siguiente.HijoIzquierdo = new ArbolBinarioBase<T>(dato);
-                                siguiente.HijoIzquierdo.Padre = siguiente;
+                                siguiente.izquierdo = new ArbolBinarioBase<T>(valor);
+                                siguiente.izquierdo.Padre = siguiente;
                                 Equilibrar(siguiente, true, true); //Es izquierdo = true, es nuevo true;
                                 yaInsertado = true;
                             }
                             else
                             {
-                                siguiente = siguiente.HijoIzquierdo as ArbolBinarioBase<T>;
+                                siguiente = siguiente.izquierdo as ArbolBinarioBase<T>;
                             }
                         }
                     }//Fin del if comparaci{on
@@ -315,7 +315,7 @@ namespace TDA
         internal void Equilibrar(IArbolBinario<T> nodo, bool esIzquierdo, bool esNuevo)
         {
             bool salir = false; //al terminar de recorrer una rama si no es necesario rotar entonces se convierte en verdadero.
-            
+
 
             // Recorrer camino inverso actualizando valores de FE:
             while ((nodo != null) && !salir)
@@ -346,13 +346,13 @@ namespace TDA
                 //Si existe algún desbalance en esta porción de código se realizan las rotaciones
                 else if (nodo.FactorBalance == -2)
                 { // Rotación a la derecha doble o simple según sea el caso y salir.
-                    if (nodo.HijoIzquierdo.FactorBalance == 1)
+                    if (nodo.izquierdo.FactorBalance == 1)
                     {
                         RDD(nodo); // Rotación doble
                         hizoRotacion = true;
                     }
                     else
-                    { 
+                    {
                         RSD(nodo); // Rotación simple
                         hizoRotacion = true;
                     }
@@ -360,7 +360,7 @@ namespace TDA
                 }
                 else if (nodo.FactorBalance == 2)
                 {  // Rotar a la izquierda doble o simple según sea el caso y salir.
-                    if (nodo.HijoDerecho.FactorBalance == -1)
+                    if (nodo.derecho.FactorBalance == -1)
                     {
                         RDI(nodo); // Rotación doble
                         hizoRotacion = true;
@@ -378,16 +378,16 @@ namespace TDA
 
                 if (nodo.Padre != null)
                 {
-                    if (nodo.Padre.HijoDerecho == nodo)
+                    if (nodo.Padre.derecho == nodo)
                         esIzquierdo = false;
                     else
                         esIzquierdo = true;
 
-                    if ((!esNuevo) &&(nodo.FactorBalance == 0))
+                    if ((!esNuevo) && (nodo.FactorBalance == 0))
                         salir = false;
-                    
+
                 }
-                    
+
                 nodo = nodo.Padre; // Calcular Factor de balance, siguiente nodo del camino ossea el padre.
             }
         }
@@ -399,23 +399,23 @@ namespace TDA
         /// </summary>
         /// <param name="nodo">El nodo con el desbalance</param>
         internal void RDD(IArbolBinario<T> nodo)
-        { 
+        {
             //Punteros necesarios para realizar la rotación
             IArbolBinario<T> Padre = nodo.Padre;
             IArbolBinario<T> P = nodo;
-            IArbolBinario<T> Q = P.HijoIzquierdo;
-            IArbolBinario<T> R = Q.HijoDerecho;
-            IArbolBinario<T> B = R.HijoIzquierdo;
-            IArbolBinario<T> C = R.HijoDerecho;
+            IArbolBinario<T> Q = P.izquierdo;
+            IArbolBinario<T> R = Q.derecho;
+            IArbolBinario<T> B = R.izquierdo;
+            IArbolBinario<T> C = R.derecho;
 
             //Si el padre del nodo desequilibrado no es null verifico si el nodo desequilibrado es el derecho
             //o el izquierdo, si el padre es null, significa que es la raiz.
             if (Padre != null)
             {
-                if (Padre.HijoDerecho == P)
-                    Padre.HijoDerecho = R;
+                if (Padre.derecho == P)
+                    Padre.derecho = R;
                 else
-                    Padre.HijoIzquierdo = R;
+                    Padre.izquierdo = R;
             }
             else
             {
@@ -424,17 +424,17 @@ namespace TDA
             }
 
             // Reconstruir árbol:
-            Q.HijoDerecho = B;
-            P.HijoIzquierdo = C;
-            R.HijoIzquierdo = Q;
-            R.HijoDerecho = P;
+            Q.derecho = B;
+            P.izquierdo = C;
+            R.izquierdo = Q;
+            R.derecho = P;
 
             // Reasignar padres:
             R.Padre = Padre;
             P.Padre = Q.Padre = R;
-            if (B != null) 
+            if (B != null)
                 B.Padre = Q;
-            if (C != null) 
+            if (C != null)
                 C.Padre = P;
 
 
@@ -443,21 +443,24 @@ namespace TDA
             {
                 case -1:
                     {
-                        Q.FactorBalance = 0; 
+                        Q.FactorBalance = 0;
                         P.FactorBalance = 1;
-                    } break;
+                    }
+                    break;
 
-                case 0: 
-                    { 
-                        Q.FactorBalance = 0; 
-                        P.FactorBalance = 0; 
-                    } break;
+                case 0:
+                    {
+                        Q.FactorBalance = 0;
+                        P.FactorBalance = 0;
+                    }
+                    break;
 
                 case 1:
                     {
-                        Q.FactorBalance = -1; 
+                        Q.FactorBalance = -1;
                         P.FactorBalance = 0;
-                    } break;
+                    }
+                    break;
             }
             R.FactorBalance = 0;
         }
@@ -468,23 +471,23 @@ namespace TDA
         /// </summary>
         /// <param name="nodo">El nodo con el desbalance</param>
         internal void RDI(IArbolBinario<T> nodo)
-        { 
+        {
             //Punteros necesarios para realizar la rotación
             IArbolBinario<T> Padre = nodo.Padre;
             IArbolBinario<T> P = nodo;
-            IArbolBinario<T> Q = nodo.HijoDerecho;
-            IArbolBinario<T> R = Q.HijoIzquierdo;
-            IArbolBinario<T> B = R.HijoIzquierdo;
-            IArbolBinario<T> C = R.HijoDerecho;
+            IArbolBinario<T> Q = nodo.derecho;
+            IArbolBinario<T> R = Q.izquierdo;
+            IArbolBinario<T> B = R.izquierdo;
+            IArbolBinario<T> C = R.derecho;
 
             //Si el padre del nodo desequilibrado no es null verifico si el nodo desequilibrado es el derecho
             //o el izquierdo, si el padre es null, significa que es la raiz.
             if (Padre != null)
             {
-                if (Padre.HijoDerecho == P)
-                    Padre.HijoDerecho = R;
+                if (Padre.derecho == P)
+                    Padre.derecho = R;
                 else
-                    Padre.HijoIzquierdo = R;
+                    Padre.izquierdo = R;
             }
             else
             {
@@ -493,17 +496,17 @@ namespace TDA
             }
 
             // Recontrucción del árbol 
-            P.HijoDerecho = B;
-            Q.HijoIzquierdo = C;
-            R.HijoIzquierdo = P;
-            R.HijoDerecho = Q;
+            P.derecho = B;
+            Q.izquierdo = C;
+            R.izquierdo = P;
+            R.derecho = Q;
 
             //Actualizando a los padres
             R.Padre = Padre;
             P.Padre = Q.Padre = R;
-            if (B != null) 
+            if (B != null)
                 B.Padre = P;
-            if (C != null) 
+            if (C != null)
                 C.Padre = Q;
 
 
@@ -514,19 +517,22 @@ namespace TDA
                     {
                         P.FactorBalance = 0;
                         Q.FactorBalance = 1;
-                    } break;
+                    }
+                    break;
 
-                case 0: 
-                    { 
-                        P.FactorBalance = 0; 
-                        Q.FactorBalance = 0; 
-                    } break;
-
-                case 1: 
+                case 0:
                     {
-                        P.FactorBalance = -1; 
+                        P.FactorBalance = 0;
                         Q.FactorBalance = 0;
-                    } break;
+                    }
+                    break;
+
+                case 1:
+                    {
+                        P.FactorBalance = -1;
+                        Q.FactorBalance = 0;
+                    }
+                    break;
             }
             R.FactorBalance = 0;
         }
@@ -540,17 +546,17 @@ namespace TDA
             //Punteros necesarios para realizar la rotación.
             IArbolBinario<T> Padre = nodo.Padre; //Parde el árbol desequilibrado.
             IArbolBinario<T> P = nodo; //Nodo desequilibrado
-            IArbolBinario<T> Q = P.HijoIzquierdo;
-            IArbolBinario<T> B = Q.HijoDerecho; //Nodo con altura igual al hijo derecho de P
+            IArbolBinario<T> Q = P.izquierdo;
+            IArbolBinario<T> B = Q.derecho; //Nodo con altura igual al hijo derecho de P
 
             //Si el padre del nodo desequilibrado no es null verifico si el nodo desequilibrado es el derecho
             //o el izquierdo, si el padre es null, significa que es la raiz.
             if (Padre != null)
             {
-                if (Padre.HijoDerecho == P)
-                    Padre.HijoDerecho = Q;
+                if (Padre.derecho == P)
+                    Padre.derecho = Q;
                 else
-                    Padre.HijoIzquierdo = Q;
+                    Padre.izquierdo = Q;
             }
             else
             {
@@ -559,12 +565,12 @@ namespace TDA
             }
 
             //Reconstruyo el arbol
-            P.HijoIzquierdo = B;
-            Q.HijoDerecho = P;
+            P.izquierdo = B;
+            Q.derecho = P;
 
             //Actualizando los nuevos padres
             P.Padre = Q;
-            if (B != null) 
+            if (B != null)
                 B.Padre = P;
             Q.Padre = Padre;
 
@@ -574,14 +580,14 @@ namespace TDA
             {
                 P.FactorBalance = -1;
                 Q.FactorBalance = 1;
-            
+
             }
             else
             {
                 P.FactorBalance = 0;
                 Q.FactorBalance = 0;
             }
-            
+
         }
 
         /// <summary>
@@ -593,17 +599,17 @@ namespace TDA
             //Punteros necesarios para realizar la rotación.
             IArbolBinario<T> Padre = nodo.Padre; //Padre del arbol desbalanceado
             IArbolBinario<T> P = nodo; //Arbol desbalanceado con FE 2
-            IArbolBinario<T> Q = P.HijoDerecho; 
-            IArbolBinario<T> B = Q.HijoIzquierdo; //Nodo con altura igual a el hijo izquierdo de P
+            IArbolBinario<T> Q = P.derecho;
+            IArbolBinario<T> B = Q.izquierdo; //Nodo con altura igual a el hijo izquierdo de P
 
             //Si el padre del nodo desequilibrado no es null verifico si el nodo desequilibrado es el derecho
             //o el izquierdo, si el padre es null, significa que es la raiz.
             if (Padre != null)
             {
-                if (Padre.HijoDerecho == P)
-                    Padre.HijoDerecho = Q;
+                if (Padre.derecho == P)
+                    Padre.derecho = Q;
                 else
-                    Padre.HijoIzquierdo = Q;
+                    Padre.izquierdo = Q;
             }
             else
             {
@@ -612,12 +618,12 @@ namespace TDA
             }
 
             //Reconstruyo el padre, 
-            P.HijoDerecho = B;
-            Q.HijoIzquierdo = P;
+            P.derecho = B;
+            Q.izquierdo = P;
 
             //Asignando nuevos padres
             P.Padre = Q;
-            if (B != null) 
+            if (B != null)
                 B.Padre = P;
             Q.Padre = Padre;
 
@@ -627,7 +633,7 @@ namespace TDA
                 P.FactorBalance = 1;
                 Q.FactorBalance = -1;
             }
-            else 
+            else
             {
                 P.FactorBalance = 0;
                 Q.FactorBalance = 0;
