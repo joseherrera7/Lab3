@@ -243,6 +243,7 @@
     <Content Include="Views\Partido\Index.cshtml" />
     <Content Include="Views\Partido\Details.cshtml" />
     <Content Include="Views\Partido\Create.cshtml" />
+    <Content Include="Views\Partido\Borrar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
