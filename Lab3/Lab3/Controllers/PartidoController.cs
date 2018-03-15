@@ -44,6 +44,7 @@ namespace Lab3.Controllers
                 // TODO: Add insert logic here
                 db.Arbolito.Insertar(Partido);
                 return RedirectToAction("Index");
+               
             }
             catch
             {
