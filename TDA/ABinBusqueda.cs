@@ -6,7 +6,7 @@ using TDALibrary;
 
 namespace TDA
 {
-    public class ABinBusqueda<T, K>: IArbolBusquedaBinario<T, K>
+    public class ABinBusqueda<T, K> : IArbolBusquedaBinario<T, K>
     {
         #region Variables
         protected ArbolBinarioBase<T> _raiz;
@@ -44,9 +44,9 @@ namespace TDA
 
         #region Miembros publicos
         /// <summary>
-        /// Busca y devuelve un Dato del árbol por medio de su llave principal
+        /// Busca y devuelve un valor del árbol por medio de su llave principal
         /// </summary>
-        /// <param name="llave">El dato representativo del conjunto de datos que almacena un nodo en el arbol</param>
+        /// <param name="llave">El valor representativo del conjunto de datos que almacena un nodo en el arbol</param>
         /// <returns>El conjunto de datos que almacena un nodo del arbol, si no existe la llave retornará default(T)</returns>
         public T Buscar(K llave)
         {
@@ -61,50 +61,50 @@ namespace TDA
             else
             {
                 ArbolBinarioBase<T> siguiente = _raiz;
-                K llaveSiguiente = this.FuncionObtenerLlave(siguiente.Dato);
+                K llaveSiguiente = this.FuncionObtenerLlave(siguiente.valor);
                 bool encontrado = false;
 
                 while (!encontrado)
                 {
-                    llaveSiguiente = this.FuncionObtenerLlave(siguiente.Dato);
+                    llaveSiguiente = this.FuncionObtenerLlave(siguiente.valor);
 
                     // > 0 si el primero es mayor < 0 si el primero es menor y 0 si son iguales
                     int comparacion = this.FuncionCompararLlave(llave, llaveSiguiente);
 
                     if (comparacion == 0)
                     {
-                        return siguiente.Dato;
+                        return siguiente.valor;
                     }
                     else
                     {
                         if (comparacion > 0)
                         {
-                            if (siguiente.HijoDerecho == null)
+                            if (siguiente.derecho == null)
                             {
                                 return default(T);
                             }
                             else
                             {
-                                siguiente = siguiente.HijoDerecho as ArbolBinarioBase<T>;
+                                siguiente = siguiente.derecho as ArbolBinarioBase<T>;
                             }
 
                         }
                         else
                         {
-                            if (siguiente.HijoIzquierdo == null)
+                            if (siguiente.izquierdo == null)
                             {
                                 return default(T);
                             }
                             else
                             {
-                                siguiente = siguiente.HijoIzquierdo as ArbolBinarioBase<T>;
+                                siguiente = siguiente.izquierdo as ArbolBinarioBase<T>;
                             }
                         }
                     }//Fin del if comparaci{on
 
                 } //Fin del ciclo
 
-            }//Fin del if que verifica que no exista ningún dato.
+            }//Fin del if que verifica que no exista ningún valor.
 
             return default(T);
         }
@@ -113,7 +113,7 @@ namespace TDA
         /// Busca, devuelve y elimina un nodo del arbol, teniendo cuidado de que el Arbol siga cumpliendo con las caracteristicas de que sea
         /// arbol binario de búsqueda, el método de eliminación utilizado es reemplazando el menor del mayor
         /// </summary>
-        /// <param name="llave">El dato representativo</param>
+        /// <param name="llave">El valor representativo</param>
         /// <returns>Conjunto de datos del nodo eliminado.</returns>
         public T Eliminar(K llave)
         {
@@ -134,7 +134,7 @@ namespace TDA
 
                 while (!encontrado)
                 {
-                    K llaveSiguiente = this.FuncionObtenerLlave(siguiente.Dato);
+                    K llaveSiguiente = this.FuncionObtenerLlave(siguiente.valor);
 
                     // > 0 si el primero es mayor < 0 si el primero es menor y 0 si son iguales
                     int comparacion = this.FuncionCompararLlave(llave, llaveSiguiente);
@@ -142,15 +142,15 @@ namespace TDA
                     if (comparacion == 0)
                     {
 
-                        if ((siguiente.HijoDerecho == null) && (siguiente.HijoIzquierdo == null)) //Si es una hoja
+                        if ((siguiente.derecho == null) && (siguiente.izquierdo == null)) //Si es una hoja
                         {
-                            T miDato = siguiente.Dato;
+                            T miDato = siguiente.valor;
                             if ((padre != null))
                             {
                                 if (EsHijoIzquierdo)
-                                    padre.HijoIzquierdo = null;
+                                    padre.izquierdo = null;
                                 else
-                                    padre.HijoDerecho = null;
+                                    padre.derecho = null;
                             }
                             else //Si padre es null entonces es la raiz
                             {
@@ -161,36 +161,36 @@ namespace TDA
                         }
                         else
                         {
-                            if (siguiente.HijoDerecho == null) //Si solo tiene rama izquierda
+                            if (siguiente.derecho == null) //Si solo tiene rama izquierda
                             {
-                                T miDato = siguiente.Dato;
+                                T miDato = siguiente.valor;
                                 if ((padre != null))
                                 {
                                     if (EsHijoIzquierdo)
-                                        padre.HijoIzquierdo = siguiente.HijoIzquierdo;
+                                        padre.izquierdo = siguiente.izquierdo;
                                     else
-                                        padre.HijoDerecho = siguiente.HijoDerecho;
+                                        padre.derecho = siguiente.derecho;
                                 }
                                 else
                                 {
-                                    _raiz = siguiente.HijoIzquierdo as ArbolBinarioBase<T>;
+                                    _raiz = siguiente.izquierdo as ArbolBinarioBase<T>;
                                 }
 
                                 return miDato;
                             }
-                            else if (siguiente.HijoIzquierdo == null)  //Si solo tiene rama derecha
+                            else if (siguiente.izquierdo == null)  //Si solo tiene rama derecha
                             {
-                                T miDato = siguiente.Dato;
+                                T miDato = siguiente.valor;
                                 if ((padre != null))
                                 {
                                     if (EsHijoIzquierdo)
-                                        padre.HijoIzquierdo = siguiente.HijoDerecho;
+                                        padre.izquierdo = siguiente.derecho;
                                     else
-                                        padre.HijoDerecho = siguiente.HijoDerecho;
+                                        padre.derecho = siguiente.derecho;
                                 }
                                 else
                                 {
-                                    _raiz = siguiente.HijoDerecho as ArbolBinarioBase<T>;
+                                    _raiz = siguiente.derecho as ArbolBinarioBase<T>;
                                 }
 
                                 return miDato;
@@ -198,12 +198,12 @@ namespace TDA
                             else  //Tiene ambas ramas el que lo sustituirá será el mas izquierdo de los derechos
                             {
                                 ArbolBinarioBase<T> aEliminar = siguiente;
-                                siguiente = siguiente.HijoDerecho as ArbolBinarioBase<T>;
+                                siguiente = siguiente.derecho as ArbolBinarioBase<T>;
                                 int cont = 0;
-                                while (siguiente.HijoIzquierdo != null)
+                                while (siguiente.izquierdo != null)
                                 {
                                     padre = siguiente;
-                                    siguiente = siguiente.HijoIzquierdo as ArbolBinarioBase<T>;
+                                    siguiente = siguiente.izquierdo as ArbolBinarioBase<T>;
                                     cont++;
                                 }
 
@@ -211,36 +211,36 @@ namespace TDA
                                 {
                                     if (padre != null)
                                     {
-                                        T miDato = aEliminar.Dato;
-                                        aEliminar.Dato = siguiente.Dato;
-                                        padre.HijoIzquierdo = null;
+                                        T miDato = aEliminar.valor;
+                                        aEliminar.valor = siguiente.valor;
+                                        padre.izquierdo = null;
                                         return miDato;
                                     }
-                                    
+
                                 }
                                 else
                                 {
-                                    siguiente.HijoIzquierdo = aEliminar.HijoIzquierdo;
+                                    siguiente.izquierdo = aEliminar.izquierdo;
 
                                     if (padre != null)
                                     {
                                         if (EsHijoIzquierdo)
-                                            padre.HijoIzquierdo = aEliminar.HijoDerecho;
+                                            padre.izquierdo = aEliminar.derecho;
                                         else
-                                            padre.HijoDerecho = aEliminar.HijoDerecho;
+                                            padre.derecho = aEliminar.derecho;
                                     }
                                     else //Es la raiz
                                     {
                                         if (EsHijoIzquierdo)
-                                            _raiz = aEliminar.HijoDerecho as ArbolBinarioBase<T>;
+                                            _raiz = aEliminar.derecho as ArbolBinarioBase<T>;
                                         else
-                                            _raiz = aEliminar.HijoDerecho as ArbolBinarioBase<T>;
+                                            _raiz = aEliminar.derecho as ArbolBinarioBase<T>;
                                     }
-                                    
 
-                                    return aEliminar.Dato;
+
+                                    return aEliminar.valor;
                                 }
-                                
+
                             }
                         }
                     }
@@ -248,7 +248,7 @@ namespace TDA
                     {
                         if (comparacion > 0)
                         {
-                            if (siguiente.HijoDerecho == null)
+                            if (siguiente.derecho == null)
                             {
                                 return default(T);
                             }
@@ -256,13 +256,13 @@ namespace TDA
                             {
                                 padre = siguiente;
                                 EsHijoIzquierdo = false;
-                                siguiente = siguiente.HijoDerecho as ArbolBinarioBase<T>;
+                                siguiente = siguiente.derecho as ArbolBinarioBase<T>;
                             }
 
                         }
                         else //menor que 0
                         {
-                            if (siguiente.HijoIzquierdo == null)
+                            if (siguiente.izquierdo == null)
                             {
                                 return default(T);
                             }
@@ -270,29 +270,29 @@ namespace TDA
                             {
                                 padre = siguiente;
                                 EsHijoIzquierdo = true;
-                                siguiente = siguiente.HijoIzquierdo as ArbolBinarioBase<T>;
+                                siguiente = siguiente.izquierdo as ArbolBinarioBase<T>;
                             }
                         }
                     }//Fin del if comparaci{on
 
                 } //Fin del ciclo
 
-            }//Fin del if que verifica que no exista ningún dato.
+            }//Fin del if que verifica que no exista ningún valor.
 
             return default(T);
         }
 
         /// <summary>
-        /// Busca si existe un conjunto de datos o dato determinado.
+        /// Busca si existe un conjunto de datos o valor determinado.
         /// </summary>
-        /// <param name="dato">El nodo del arbol a buscar</param>
+        /// <param name="valor">El nodo del arbol a buscar</param>
         /// <returns>Verdadero si encontró dicho nodo.</returns>
-        public bool ExisteElemento(T dato)
+        public bool ExisteElemento(T valor)
         {
             if ((this.FuncionCompararLlave == null) || (this.FuncionObtenerLlave == null))
                 throw new Exception("No se han inicializado las funciones para operar la estructura");
 
-            if (Equals(dato, default(T)))
+            if (Equals(valor, default(T)))
                 throw new ArgumentNullException("La llave enviada no es valida");
 
             if (_raiz == null)
@@ -300,12 +300,12 @@ namespace TDA
             else
             {
                 ArbolBinarioBase<T> siguiente = _raiz;
-                K llaveBuscar = this.FuncionObtenerLlave(dato);
+                K llaveBuscar = this.FuncionObtenerLlave(valor);
                 bool encontrado = false;
 
                 while (!encontrado)
                 {
-                    K llaveSiguiente = this.FuncionObtenerLlave(siguiente.Dato);
+                    K llaveSiguiente = this.FuncionObtenerLlave(siguiente.valor);
 
                     // > 0 si el primero es mayor < 0 si el primero es menor y 0 si son iguales
                     int comparacion = this.FuncionCompararLlave(llaveBuscar, llaveSiguiente);
@@ -318,32 +318,32 @@ namespace TDA
                     {
                         if (comparacion > 0)
                         {
-                            if (siguiente.HijoDerecho == null)
+                            if (siguiente.derecho == null)
                             {
                                 return false;
                             }
                             else
                             {
-                                siguiente = siguiente.HijoDerecho as ArbolBinarioBase<T>;
+                                siguiente = siguiente.derecho as ArbolBinarioBase<T>;
                             }
 
                         }
                         else
                         {
-                            if (siguiente.HijoIzquierdo == null)
+                            if (siguiente.izquierdo == null)
                             {
                                 return false;
                             }
                             else
                             {
-                                siguiente = siguiente.HijoIzquierdo as ArbolBinarioBase<T>;
+                                siguiente = siguiente.izquierdo as ArbolBinarioBase<T>;
                             }
                         }
                     }//Fin del if comparaci{on
 
                 } //Fin del ciclo
 
-            }//Fin del if que verifica que no exista ningún dato.
+            }//Fin del if que verifica que no exista ningún valor.
             return false;
         }
 
@@ -378,61 +378,61 @@ namespace TDA
         }
 
         /// <summary>
-        /// Inserta un Dato en su posición especifica cumpliendo con las reglas de los Arboles binarios de búsqueda.
+        /// Inserta un valor en su posición especifica cumpliendo con las reglas de los Arboles binarios de búsqueda.
         /// </summary>
-        /// <param name="dato">El dato que se desea insertar.</param>
-        public void Insertar(T dato)
+        /// <param name="valor">El valor que se desea insertar.</param>
+        public void Insertar(T valor)
         {
             if ((this.FuncionCompararLlave == null) || (this.FuncionObtenerLlave == null))
                 throw new Exception("No se han inicializado las funciones para operar la estructura");
-            
-            if (dato == null)
-                throw new ArgumentNullException("El dato ingresado está vacio");
+
+            if (valor == null)
+                throw new ArgumentNullException("El valor ingresado está vacio");
 
             if (_raiz == null)
-                _raiz = new ArbolBinarioBase<T>(dato);
+                _raiz = new ArbolBinarioBase<T>(valor);
             else
             {
                 ArbolBinarioBase<T> siguiente = _raiz;
-                K llaveInsertar = this.FuncionObtenerLlave(dato);
+                K llaveInsertar = this.FuncionObtenerLlave(valor);
                 bool yaInsertado = false;
 
                 while (!yaInsertado)
                 {
-                    K llaveSiguiente = this.FuncionObtenerLlave(siguiente.Dato);
+                    K llaveSiguiente = this.FuncionObtenerLlave(siguiente.valor);
 
                     // > 0 si el primero es mayor < 0 si el primero es menor y 0 si son iguales
                     int comparacion = this.FuncionCompararLlave(llaveInsertar, llaveSiguiente);
 
                     if (comparacion == 0)
                     {
-                        throw new Exception("El dato ingresado posee una llave que ya existe en la estructura");
+                        throw new Exception("El valor ingresado posee una llave que ya existe en la estructura");
                     }
                     else
                     {
                         if (comparacion > 0)
                         {
-                            if (siguiente.HijoDerecho == null)
+                            if (siguiente.derecho == null)
                             {
-                                siguiente.HijoDerecho = new ArbolBinarioBase<T>(dato);
+                                siguiente.derecho = new ArbolBinarioBase<T>(valor);
                                 yaInsertado = true;
                             }
                             else
                             {
-                                siguiente = siguiente.HijoDerecho as ArbolBinarioBase<T>;
+                                siguiente = siguiente.derecho as ArbolBinarioBase<T>;
                             }
 
                         }
                         else
                         {
-                            if (siguiente.HijoIzquierdo == null)
+                            if (siguiente.izquierdo == null)
                             {
-                                siguiente.HijoIzquierdo = new ArbolBinarioBase<T>(dato);
+                                siguiente.izquierdo = new ArbolBinarioBase<T>(valor);
                                 yaInsertado = true;
                             }
                             else
                             {
-                                siguiente = siguiente.HijoIzquierdo as ArbolBinarioBase<T>;
+                                siguiente = siguiente.izquierdo as ArbolBinarioBase<T>;
                             }
                         }
                     }//Fin del if comparaci{on
@@ -444,7 +444,7 @@ namespace TDA
         /// <summary>
         /// Verifica si existe un nodo del arbol a través de su llave primaria
         /// </summary>
-        /// <param name="llave">La llave primaria del dato buscado.</param>
+        /// <param name="llave">La llave primaria del valor buscado.</param>
         /// <returns>Verdadero si lo encontró.</returns>
         public bool ExisteElementoPorLlave(K llave)
         {
@@ -463,7 +463,7 @@ namespace TDA
 
                 while (!encontrado)
                 {
-                    K llaveSiguiente = this.FuncionObtenerLlave(siguiente.Dato);
+                    K llaveSiguiente = this.FuncionObtenerLlave(siguiente.valor);
 
                     // > 0 si el primero es mayor < 0 si el primero es menor y 0 si son iguales
                     int comparacion = this.FuncionCompararLlave(llave, llaveSiguiente);
@@ -476,32 +476,32 @@ namespace TDA
                     {
                         if (comparacion > 0)
                         {
-                            if (siguiente.HijoDerecho == null)
+                            if (siguiente.derecho == null)
                             {
                                 return false;
                             }
                             else
                             {
-                                siguiente = siguiente.HijoDerecho as ArbolBinarioBase<T>;
+                                siguiente = siguiente.derecho as ArbolBinarioBase<T>;
                             }
 
                         }
                         else
                         {
-                            if (siguiente.HijoIzquierdo == null)
+                            if (siguiente.izquierdo == null)
                             {
                                 return false;
                             }
                             else
                             {
-                                siguiente = siguiente.HijoIzquierdo as ArbolBinarioBase<T>;
+                                siguiente = siguiente.izquierdo as ArbolBinarioBase<T>;
                             }
                         }
                     }//Fin del if comparaci{on
 
                 } //Fin del ciclo
 
-            }//Fin del if que verifica que no exista ningún dato.
+            }//Fin del if que verifica que no exista ningún valor.
             return false;
         }
 
@@ -548,7 +548,7 @@ namespace TDA
         }
         public List<T> ToList()
         {
-           
+
             List<T> nuevaLista = new List<T>();
             for (int i = 0; i < miLista.Longitud; i++)
             {
@@ -567,7 +567,7 @@ namespace TDA
         /// <param name="arbol">Debe iniciar con la raiz y va guardando los arboles.</param>
         internal void VisitarArbol(IArbolBinario<T> arbol)
         {
-            miLista.Agregar(arbol.Dato);
+            miLista.Agregar(arbol.valor);
         }
         #endregion
 

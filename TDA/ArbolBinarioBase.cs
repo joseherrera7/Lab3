@@ -42,9 +42,9 @@ namespace TDA
         public ArbolBinarioBase(T dato, IArbolBinario<T> hijoIzquierdo,
             IArbolBinario<T> hijoDerecho)
         {
-            this.Dato = dato;
-            this.HijoIzquierdo = hijoIzquierdo;
-            this.HijoDerecho = hijoDerecho;
+            this.valor = dato;
+            this.izquierdo = hijoIzquierdo;
+            this.derecho = hijoDerecho;
             this.Padre = null;
             this.FactorBalance = 0;
         }
@@ -78,7 +78,7 @@ namespace TDA
         /// <summary>
         /// Dato almacenado
         /// </summary>
-        public T Dato
+        public T valor
         {
             get
             {
@@ -93,7 +93,7 @@ namespace TDA
         /// <summary>
         /// Arbol binario izquierda
         /// </summary>
-        public IArbolBinario<T> HijoIzquierdo
+        public IArbolBinario<T> izquierdo
         {
             get
             {
@@ -108,7 +108,7 @@ namespace TDA
         /// <summary>
         /// Arbol binario derecha
         /// </summary>
-        public IArbolBinario<T> HijoDerecho
+        public IArbolBinario<T> derecho
         {
             get
             {
@@ -144,14 +144,14 @@ namespace TDA
         {
             visitar(this);
 
-            if (this.HijoIzquierdo != null)
+            if (this.izquierdo != null)
             {
-                this.HijoIzquierdo.RecorrerPrefijo(visitar);
+                this.izquierdo.RecorrerPrefijo(visitar);
             }
 
-            if (this.HijoDerecho != null)
+            if (this.derecho != null)
             {
-                this.HijoDerecho.RecorrerPrefijo(visitar);
+                this.derecho.RecorrerPrefijo(visitar);
             }
 
         }
@@ -163,16 +163,16 @@ namespace TDA
         /// <param name="visitar">Función para visitar el arbol</param>
         public void RecorrerInfijo(VisitarArbolDelegate<T> visitar)
         {
-            if (this.HijoIzquierdo != null)
+            if (this.izquierdo != null)
             {
-                this.HijoIzquierdo.RecorrerInfijo(visitar);
+                this.izquierdo.RecorrerInfijo(visitar);
             }
 
             visitar(this);
 
-            if (this.HijoDerecho != null)
+            if (this.derecho != null)
             {
-                this.HijoDerecho.RecorrerInfijo(visitar);
+                this.derecho.RecorrerInfijo(visitar);
             }
         }
 
@@ -183,14 +183,14 @@ namespace TDA
         /// <param name="visitar">Función para visitar el arbol</param>
         public void RecorrerPosfijo(VisitarArbolDelegate<T> visitar)
         {
-            if (this.HijoIzquierdo != null)
+            if (this.izquierdo != null)
             {
-                this.HijoIzquierdo.RecorrerPosfijo(visitar);
+                this.izquierdo.RecorrerPosfijo(visitar);
             }
 
-            if (this.HijoDerecho != null)
+            if (this.derecho != null)
             {
-                this.HijoDerecho.RecorrerPosfijo(visitar);
+                this.derecho.RecorrerPosfijo(visitar);
             }
 
             visitar(this);
