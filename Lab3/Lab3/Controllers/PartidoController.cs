@@ -7,9 +7,10 @@ using System.Net;
 using System.IO;
 using System.Data;
 using Lab3.DBContext;
-using Newtonsoft.Json;
+
 using TDA;
 using Lab3.Models;
+using Newtonsoft.Json;
 
 namespace Lab3.Controllers
 {
@@ -94,6 +95,74 @@ namespace Lab3.Controllers
             {
                 return View();
             }
+        }
+        /// <summary>
+        /// GET UPLOAD
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult Upload()
+        {
+            return View();
+        }
+        /// <summary>
+        /// Se sube un archivo
+        /// </summary>
+        /// <param name="upload"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Upload(HttpPostedFileBase upload)
+        {
+            if (ModelState.IsValid)
+            {
+                string filePath = string.Empty;
+                if (upload != null && upload.ContentLength > 0)
+                {
+
+                    if (upload.FileName.EndsWith(".json"))
+                    {
+                        Stream stream = upload.InputStream;
+                        JsonReader<ArbolAVLBase<Partido, int>> reader = new JsonReader<TDA.ArbolAVLBase<Partido, int>>();
+                        db.Arbolito = reader.Data(stream);
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("File", "This file format is not supported");
+                        return View();
+                    }
+                }
+                else
+                {
+                    ModelState.AddModelError("File", "Please Upload Your file");
+                }
+            }
+            return View();
+
+        }
+        public class JsonReader<T>
+        {
+            /// <summary>
+            /// Lector de Archivos tipo Json
+            /// </summary>
+            /// <param name="rutaOrigen">Ruta de archivos</param>
+            /// <returns></returns>
+            public ArbolAVLBase<Partido, int> Data(Stream rutaOrigen)
+            {
+                try
+                {
+                    ArbolAVLBase<Partido, int> data;
+                    StreamReader reader = new StreamReader(rutaOrigen);
+                    string temp = reader.ReadToEnd();
+                    data = JsonConvert.DeserializeObject<ArbolAVLBase<Partido, int>>(temp);
+                    reader.Close();
+                    return data;
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+
         }
     }
 }
