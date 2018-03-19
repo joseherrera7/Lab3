@@ -242,7 +242,11 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Partido\Index.cshtml" />
     <Content Include="Views\Partido\Details.cshtml" />
+    <Content Include="Views\Partido\Delete.cshtml" />
     <Content Include="Views\Partido\Create.cshtml" />
+    <Content Include="Views\Fechas\Index.cshtml" />
+    <Content Include="Views\Fechas\Create.cshtml" />
+    <Content Include="Views\Fechas\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

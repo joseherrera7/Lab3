@@ -8,9 +8,9 @@ namespace Lab3.Models
 {
     public class Partido
     {
-        [Key]
+        
         public int NoPartido { get; set; }
-        [Key]
+       
         public DateTime FechaPartido { get; set; }
         public string Grupo { get; set; }
         public string Pais1 { get; set; }

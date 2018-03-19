@@ -89,3 +89,6 @@ C:\Users\JoseCarlos\Documents\GitHub\Lab3\Lab3\Lab3\bin\es\Microsoft.Owin.Securi
 C:\Users\JoseCarlos\Documents\GitHub\Lab3\Lab3\Lab3\obj\Debug\Lab3.csprojResolveAssemblyReference.cache
 C:\Users\JoseCarlos\Documents\GitHub\Lab3\Lab3\Lab3\obj\Debug\Lab3.dll
 C:\Users\JoseCarlos\Documents\GitHub\Lab3\Lab3\Lab3\obj\Debug\Lab3.pdb
+C:\Users\Renato\Documents\GitHub\Lab3\Lab3\Lab3\obj\Debug\Lab3.csprojResolveAssemblyReference.cache
+C:\Users\Renato\Documents\GitHub\Lab3\Lab3\Lab3\obj\Debug\Lab3.dll
+C:\Users\Renato\Documents\GitHub\Lab3\Lab3\Lab3\obj\Debug\Lab3.pdb

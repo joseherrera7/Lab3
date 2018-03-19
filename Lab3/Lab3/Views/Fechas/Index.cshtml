@@ -1,0 +1,35 @@
+﻿@model IEnumerable<Lab3.Models.Partido>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Partidos del Mundial de la FIFA</h2>
+
+<p>
+    @using (Html.BeginForm())
+    {
+
+    }
+
+    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Delete", "Delete")
+
+</p>
+<table class="table">
+    <tr>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            </td>
+        </tr>
+    }
+
+</table>
