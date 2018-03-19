@@ -7,18 +7,19 @@ using System.Net;
 using System.IO;
 using System.Data;
 using Lab3.DBContext;
-
 using TDA;
 using Lab3.Models;
 using Newtonsoft.Json;
 
 namespace Lab3.Controllers
 {
-    public class PartidoController : Controller
+    public class PartidoController<T> : Controller
     {
-        DefaultConnection db = DefaultConnection.getInstance;
-       
+        DefaultConnection<T> db = DefaultConnection<T>.getInstance;
+
         // GET: Partido
+        [HttpPost]
+        
         public ActionResult Index()
         {
             return View(db.Arbolito.ToList());
@@ -61,35 +62,69 @@ namespace Lab3.Controllers
 
         // POST: Partido/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit([Bind(Include = "NoPartido,FechaPartido,Grupo,Pais1,Pais2,Estadio")]Partido Partido)
         {
             try
             {
-                // TODO: Add update logic here
+                Partido PartidoBuscado = db.Arbolito.Buscar(Partido.);
+                if (PartidoBuscado == null)
+                {
+                    return HttpNotFound();
+                }
+                PartidoBuscado.Estadio = Partido.Estadio;
+                PartidoBuscado.Grupo = Partido.Grupo;
+                PartidoBuscado.FechaPartido = PartidoBuscado.FechaPartido;
+                PartidoBuscado.NoPartido = PartidoBuscado.NoPartido;
+                PartidoBuscado.Pais1 = Partido.Pais1;
+                PartidoBuscado.Pais2 = Partido.Pais2;
 
                 return RedirectToAction("Index");
             }
             catch
             {
-                return View();
+                return View("Index");
             }
         }
 
         // GET: Partido/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            Partido PartidoBuscado = db.Arbolito.Buscar(id);
+
+            if (PartidoBuscado == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(PartidoBuscado);
         }
 
         // POST: Partido/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult Delete(T id, FormCollection collection)
         {
             try
             {
                 // TODO: Add delete logic here
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
 
-                return RedirectToAction("Index");
+                Partido PartidoBuscado = db.Arbolito.Buscar(id);
+
+                if (PartidoBuscado == null)
+                {
+                    return HttpNotFound();
+                }
+
+                return View(PartidoBuscado);
+                
             }
             catch
             {
@@ -122,8 +157,8 @@ namespace Lab3.Controllers
                     if (upload.FileName.EndsWith(".json"))
                     {
                         Stream stream = upload.InputStream;
-                        JsonReader<ArbolAVLBase<Partido, int>> reader = new JsonReader<TDA.ArbolAVLBase<Partido, int>>();
-                        db.Arbolito = reader.Data(stream);
+                        JsonReader<Partido[]> reader = new JsonReader<Partido[]>();
+                        
                     }
                     else
                     {
@@ -146,14 +181,14 @@ namespace Lab3.Controllers
             /// </summary>
             /// <param name="rutaOrigen">Ruta de archivos</param>
             /// <returns></returns>
-            public ArbolAVLBase<Partido, int> Data(Stream rutaOrigen)
+            public Partido[] Data(Stream rutaOrigen)
             {
                 try
                 {
-                    ArbolAVLBase<Partido, int> data;
+                    Partido[] data;
                     StreamReader reader = new StreamReader(rutaOrigen);
                     string temp = reader.ReadToEnd();
-                    data = JsonConvert.DeserializeObject<ArbolAVLBase<Partido, int>>(temp);
+                    data = JsonConvert.DeserializeObject<Partido[]>(temp);
                     reader.Close();
                     return data;
                 }
