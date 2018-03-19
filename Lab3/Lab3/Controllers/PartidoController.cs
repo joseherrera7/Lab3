@@ -7,17 +7,19 @@ using System.Net;
 using System.IO;
 using System.Data;
 using Lab3.DBContext;
-using Newtonsoft.Json;
 using TDA;
 using Lab3.Models;
+using Newtonsoft.Json;
 
 namespace Lab3.Controllers
 {
-    public class PartidoController : Controller
+    public class PartidoController<T> : Controller
     {
-        DefaultConnection db = DefaultConnection.getInstance;
-       
+        DefaultConnection<T> db = DefaultConnection<T>.getInstance;
+
         // GET: Partido
+        [HttpPost]
+        
         public ActionResult Index()
         {
             return View(db.Arbolito.ToList());
@@ -60,40 +62,142 @@ namespace Lab3.Controllers
 
         // POST: Partido/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit([Bind(Include = "NoPartido,FechaPartido,Grupo,Pais1,Pais2,Estadio")]Partido Partido)
         {
             try
             {
-                // TODO: Add update logic here
+                Partido PartidoBuscado = db.Arbolito.Buscar(Partido.);
+                if (PartidoBuscado == null)
+                {
+                    return HttpNotFound();
+                }
+                PartidoBuscado.Estadio = Partido.Estadio;
+                PartidoBuscado.Grupo = Partido.Grupo;
+                PartidoBuscado.FechaPartido = PartidoBuscado.FechaPartido;
+                PartidoBuscado.NoPartido = PartidoBuscado.NoPartido;
+                PartidoBuscado.Pais1 = Partido.Pais1;
+                PartidoBuscado.Pais2 = Partido.Pais2;
 
                 return RedirectToAction("Index");
             }
             catch
             {
-                return View();
+                return View("Index");
             }
         }
 
         // GET: Partido/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            Partido PartidoBuscado = db.Arbolito.Buscar(id);
+
+            if (PartidoBuscado == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(PartidoBuscado);
         }
 
         // POST: Partido/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult Delete(T id, FormCollection collection)
         {
             try
             {
                 // TODO: Add delete logic here
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
 
-                return RedirectToAction("Index");
+                Partido PartidoBuscado = db.Arbolito.Buscar(id);
+
+                if (PartidoBuscado == null)
+                {
+                    return HttpNotFound();
+                }
+
+                return View(PartidoBuscado);
+                
             }
             catch
             {
                 return View();
             }
+        }
+        /// <summary>
+        /// GET UPLOAD
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult Upload()
+        {
+            return View();
+        }
+        /// <summary>
+        /// Se sube un archivo
+        /// </summary>
+        /// <param name="upload"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Upload(HttpPostedFileBase upload)
+        {
+            if (ModelState.IsValid)
+            {
+                string filePath = string.Empty;
+                if (upload != null && upload.ContentLength > 0)
+                {
+
+                    if (upload.FileName.EndsWith(".json"))
+                    {
+                        Stream stream = upload.InputStream;
+                        JsonReader<Partido[]> reader = new JsonReader<Partido[]>();
+                        
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("File", "This file format is not supported");
+                        return View();
+                    }
+                }
+                else
+                {
+                    ModelState.AddModelError("File", "Please Upload Your file");
+                }
+            }
+            return View();
+
+        }
+        public class JsonReader<T>
+        {
+            /// <summary>
+            /// Lector de Archivos tipo Json
+            /// </summary>
+            /// <param name="rutaOrigen">Ruta de archivos</param>
+            /// <returns></returns>
+            public Partido[] Data(Stream rutaOrigen)
+            {
+                try
+                {
+                    Partido[] data;
+                    StreamReader reader = new StreamReader(rutaOrigen);
+                    string temp = reader.ReadToEnd();
+                    data = JsonConvert.DeserializeObject<Partido[]>(temp);
+                    reader.Close();
+                    return data;
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+
         }
     }
 }

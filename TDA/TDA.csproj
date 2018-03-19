@@ -49,6 +49,7 @@
     <Compile Include="ABinBusqueda.cs" />
     <Compile Include="ArbolAVLBase.cs" />
     <Compile Include="ArbolBinarioBase.cs" />
+    <Compile Include="BTreeNode.cs" />
     <Compile Include="ColaBase.cs" />
     <Compile Include="Figuras.cs" />
     <Compile Include="IArbolAVL.cs" />

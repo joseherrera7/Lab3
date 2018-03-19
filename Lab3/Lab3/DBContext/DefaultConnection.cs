@@ -8,12 +8,12 @@ using TDALibrary;
 
 namespace Lab3.DBContext
 {
-    public class DefaultConnection
+    public class DefaultConnection<T>
     {
-        private static volatile DefaultConnection Instance;
+        private static volatile DefaultConnection<T> Instance;
         private static object syncRoot = new Object();
        
-        public ArbolAVLBase<Partido, int> Arbolito = new ArbolAVLBase<Partido, int>();
+        public ArbolAVLBase<Partido, T> Arbolito = new ArbolAVLBase<Partido, T>();
         public int IDActual { get; set; }
 
         private DefaultConnection()
@@ -21,7 +21,7 @@ namespace Lab3.DBContext
             IDActual = 0;
         }
 
-        public static DefaultConnection getInstance
+        public static DefaultConnection<T> getInstance
         {
             get
             {
@@ -31,7 +31,7 @@ namespace Lab3.DBContext
                     {
                         if (Instance == null)
                         {
-                            Instance = new DefaultConnection();
+                            Instance = new DefaultConnection<T>();
                         }
                     }
                 }

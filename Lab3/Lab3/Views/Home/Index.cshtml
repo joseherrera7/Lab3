@@ -10,8 +10,11 @@
 
 <div class="row">
     <div class="col-md-4">
-        <h2>Partidos</h2>
-        @Html.ActionLink("Partidos", "Index", "Partido")
+        <h2>Escoja la clave: </h2>
+        <form action="" method="post">
+            <input type="submit" value="Numero de Partidos" name="action:Index" />
+            <input type="submit" value="Fecha de Partidos" name="action:Index" />
+        </form>
     </div>
     
 </div>
