@@ -11,11 +11,18 @@
 <div class="row">
     <div class="col-md-4">
         <h2>Escoja la clave: </h2>
+<<<<<<< HEAD
         @using (Html.BeginForm("Index", "PartidoController", FormMethod.Post))
         {
             <input type="submit" name="submitButton" value="Numero de Partidos"  />
             <input type="submit" name="submitButton" value="Fecha de Partidos" />
         }
+=======
+        <form action="" method="post">
+            <p>@Html.ActionLink("Por Numero de Partidos", "Index", "Partido")</p>
+            <p>@Html.ActionLink("Por Fechas de Partidos", "Index", "Fechas")</p>
+        </form>
+>>>>>>> b346a0d2534330787c97e97b97c994cfaf0707e1
     </div>
     
 </div>

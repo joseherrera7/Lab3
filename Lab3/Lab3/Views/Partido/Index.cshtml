@@ -9,10 +9,14 @@
 <p>
     @using (Html.BeginForm())
     {
-    
+    <p>
+        Buscar: @Html.TextBox("SearchString")
+        <input type="submit" value="Search" />
+    </p>
     }
 
     @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Delete", "Delete")
 
 </p>
 @using (Html.BeginForm())
