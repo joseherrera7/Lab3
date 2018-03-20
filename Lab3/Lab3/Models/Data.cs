@@ -5,7 +5,8 @@ using System.Web;
 
 namespace Lab3.Models
 {
-    public class Data
+    public class Data<T>
     {
+       
     }
 }

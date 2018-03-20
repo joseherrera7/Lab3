@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using TDALibrary;
@@ -8,6 +9,9 @@ namespace TDA
 {
     public class ArbolAVLBase<T, K> : ABinBusqueda<T, K>, IArbolAVL<T, K>
     {
+        Log nuevoLog = new Log();
+        StreamWriter w = File.AppendText("log.txt");
+        StreamReader r = File.OpenText("log.txt");
         /// <summary>
         /// Properti que devuelve la Raíz de un árbol, es de solo lectura
         /// </summary>
@@ -232,7 +236,7 @@ namespace TDA
                 } //Fin del ciclo
 
             }//Fin del if que verifica que no exista ningún valor.
-
+            nuevoLog.Eliminacion(w);
             return default(T);
         }
 
@@ -301,7 +305,9 @@ namespace TDA
                     }//Fin del if comparaci{on
 
                 } //Fin del ciclo
+
             }
+            nuevoLog.Insercion(w);
         }
 
         /// <summary>
@@ -390,6 +396,7 @@ namespace TDA
 
                 nodo = nodo.Padre; // Calcular Factor de balance, siguiente nodo del camino ossea el padre.
             }
+            nuevoLog.Balanceo(w);
         }
 
         /// <summary>

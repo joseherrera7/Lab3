@@ -11,10 +11,11 @@
 <div class="row">
     <div class="col-md-4">
         <h2>Escoja la clave: </h2>
-        <form action="" method="post">
-            <input type="submit" value="Numero de Partidos" name="action:Index" />
-            <input type="submit" value="Fecha de Partidos" name="action:Index" />
-        </form>
+        @using (Html.BeginForm("Index", "PartidoController", FormMethod.Post))
+        {
+            <input type="submit" name="submitButton" value="Numero de Partidos"  />
+            <input type="submit" name="submitButton" value="Fecha de Partidos" />
+        }
     </div>
     
 </div>

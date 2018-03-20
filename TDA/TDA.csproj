@@ -59,6 +59,7 @@
     <Compile Include="IPila.cs" />
     <Compile Include="ListaBase.cs" />
     <Compile Include="ListaOriginal.cs" />
+    <Compile Include="Log.cs" />
     <Compile Include="PilaBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

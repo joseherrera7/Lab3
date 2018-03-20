@@ -12,8 +12,9 @@ namespace Lab3.DBContext
     {
         private static volatile DefaultConnection<T> Instance;
         private static object syncRoot = new Object();
-       
         public ArbolAVLBase<Partido, T> Arbolito = new ArbolAVLBase<Partido, T>();
+        
+        
         public int IDActual { get; set; }
 
         private DefaultConnection()

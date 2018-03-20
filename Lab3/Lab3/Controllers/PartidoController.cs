@@ -13,12 +13,9 @@ using Newtonsoft.Json;
 
 namespace Lab3.Controllers
 {
-    public class PartidoController<T> : Controller
+    public class PartidoController : Controller
     {
-        DefaultConnection<T> db = DefaultConnection<T>.getInstance;
 
-        // GET: Partido
-        [HttpPost]
         
         public ActionResult Index()
         {
@@ -40,12 +37,13 @@ namespace Lab3.Controllers
         // POST: Partido/Create
         [HttpPost]
         public ActionResult Create([Bind(Include = "NoPartido,FechaPartido,Grupo,Pais1,Pais2,Estadio")] Partido Partido)
-        {
+        {   
             try
             {
                 // TODO: Add insert logic here
                 db.Arbolito.Insertar(Partido);
                 return RedirectToAction("Index");
+
                
             }
             catch
@@ -66,7 +64,7 @@ namespace Lab3.Controllers
         {
             try
             {
-                Partido PartidoBuscado = db.Arbolito.Buscar(Partido.);
+                Partido PartidoBuscado = db.Arbolito.Buscar(Partido);
                 if (PartidoBuscado == null)
                 {
                     return HttpNotFound();
@@ -106,7 +104,7 @@ namespace Lab3.Controllers
 
         // POST: Partido/Delete/5
         [HttpPost]
-        public ActionResult Delete(T id, FormCollection collection)
+        public ActionResult Delete(int id, FormCollection collection)
         {
             try
             {
@@ -156,9 +154,14 @@ namespace Lab3.Controllers
 
                     if (upload.FileName.EndsWith(".json"))
                     {
+                        
                         Stream stream = upload.InputStream;
                         JsonReader<Partido[]> reader = new JsonReader<Partido[]>();
-                        
+                        Partido[] Partidos = reader.Data(stream);
+                        for (int i = 0; i < Partidos.Length; i++)
+                        {
+                            db.Arbolito.Insertar(Partidos[i]);
+                        }
                     }
                     else
                     {
