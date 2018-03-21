@@ -236,7 +236,7 @@ namespace TDA
                 } //Fin del ciclo
 
             }//Fin del if que verifica que no exista ningún valor.
-            nuevoLog.Eliminacion(w);
+            nuevoLog.Eliminacion(w,r);
             return default(T);
         }
 
@@ -307,7 +307,7 @@ namespace TDA
                 } //Fin del ciclo
 
             }
-            nuevoLog.Insercion(w);
+            nuevoLog.Insercion(w,r);
         }
 
         /// <summary>
@@ -396,7 +396,7 @@ namespace TDA
 
                 nodo = nodo.Padre; // Calcular Factor de balance, siguiente nodo del camino ossea el padre.
             }
-            nuevoLog.Balanceo(w);
+            nuevoLog.Balanceo(w,r);
         }
 
         /// <summary>

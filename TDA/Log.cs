@@ -31,17 +31,20 @@ namespace TDA
             }
         }
 
-        public void Insercion(StreamWriter w)
+        public void Insercion(StreamWriter w, StreamReader r)
         {
             Logg("Insercion", w);
+            DumpLog(r);
         }
-        public void Eliminacion(StreamWriter w)
+        public void Eliminacion(StreamWriter w, StreamReader r)
         {
             Logg("Eliminacion", w);
+            DumpLog(r);
         }
-        public void Balanceo(StreamWriter w)
+        public void Balanceo(StreamWriter w, StreamReader r)
         {
             Logg("Balanceo", w);
+            DumpLog(r);
         }
     }
 }
