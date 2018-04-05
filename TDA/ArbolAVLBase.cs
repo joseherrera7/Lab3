@@ -9,9 +9,10 @@ namespace TDA
 {
     public class ArbolAVLBase<T, K> : ABinBusqueda<T, K>, IArbolAVL<T, K>
     {
+        
         Log nuevoLog = new Log();
-        StreamWriter w = File.AppendText("log.txt");
-        StreamReader r = File.OpenText("log.txt");
+        //StreamWriter w = File.AppendText("log.txt");
+        //StreamReader r = File.OpenText("log.txt");
         /// <summary>
         /// Properti que devuelve la Raíz de un árbol, es de solo lectura
         /// </summary>
@@ -236,7 +237,8 @@ namespace TDA
                 } //Fin del ciclo
 
             }//Fin del if que verifica que no exista ningún valor.
-            nuevoLog.Eliminacion(w,r);
+            //nuevoLog.Eliminacion(w,r);
+            
             return default(T);
         }
 
@@ -259,7 +261,7 @@ namespace TDA
                 ArbolBinarioBase<T> siguiente = _raiz;
                 K llaveInsertar = this.FuncionObtenerLlave(valor);
                 bool yaInsertado = false;
-
+                
                 while (!yaInsertado)
                 {
                     K llaveSiguiente = this.FuncionObtenerLlave(siguiente.valor);
@@ -307,7 +309,8 @@ namespace TDA
                 } //Fin del ciclo
 
             }
-            nuevoLog.Insercion(w,r);
+           
+            //nuevoLog.Insercion(w,r);
         }
 
         /// <summary>
@@ -396,7 +399,7 @@ namespace TDA
 
                 nodo = nodo.Padre; // Calcular Factor de balance, siguiente nodo del camino ossea el padre.
             }
-            nuevoLog.Balanceo(w,r);
+           // nuevoLog.Balanceo(w,r);
         }
 
         /// <summary>

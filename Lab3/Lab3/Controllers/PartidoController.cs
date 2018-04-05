@@ -15,10 +15,12 @@ namespace Lab3.Controllers
 {
     public class PartidoController : Controller
     {
+        string Lista;
 
-        
+        DefaultConnection<int> db = DefaultConnection<int>.getInstance;
         public ActionResult Index()
         {
+           
             return View(db.Arbolito.ToList());
         }
 
@@ -41,7 +43,13 @@ namespace Lab3.Controllers
             try
             {
                 // TODO: Add insert logic here
+                
+                db.Arbolito.FuncionObtenerLlave = ObtenerClave;
+                db.Arbolito.FuncionCompararLlave = Comparar;
+               
                 db.Arbolito.Insertar(Partido);
+                db.Arbolito.RecorrerPostOrder(ObtenerListado);
+                db.IDActual++;
                 return RedirectToAction("Index");
 
                
@@ -51,7 +59,23 @@ namespace Lab3.Controllers
                 return View();
             }
         }
-
+        private void ObtenerListado(Partido miPartido)
+        {
+            Lista = Lista + " " + miPartido.NoPartido + " |";
+        }
+        int Comparar(int Clave1, int Clave2)
+        {
+            if (Clave1 > Clave2)
+                return 1;
+            else if (Clave1 < Clave2)
+                return -1;
+            else
+                return 0;
+        }
+        int ObtenerClave(Partido dato)
+        {
+            return dato.NoPartido;
+        }
         // GET: Partido/Edit/5
         public ActionResult Edit(int id)
         {
@@ -64,7 +88,7 @@ namespace Lab3.Controllers
         {
             try
             {
-                Partido PartidoBuscado = db.Arbolito.Buscar(Partido);
+                Partido PartidoBuscado = db.Arbolito.Buscar(Partido.NoPartido);
                 if (PartidoBuscado == null)
                 {
                     return HttpNotFound();
@@ -75,7 +99,7 @@ namespace Lab3.Controllers
                 PartidoBuscado.NoPartido = PartidoBuscado.NoPartido;
                 PartidoBuscado.Pais1 = Partido.Pais1;
                 PartidoBuscado.Pais2 = Partido.Pais2;
-
+                db.Arbolito.RecorrerPostOrder(ObtenerListado);
                 return RedirectToAction("Index");
             }
             catch
@@ -120,9 +144,11 @@ namespace Lab3.Controllers
                 {
                     return HttpNotFound();
                 }
+                db.Arbolito.Eliminar(PartidoBuscado.NoPartido);
+                db.Arbolito.RecorrerPostOrder(ObtenerListado);
+                db.IDActual--;
+                return RedirectToAction("Index");
 
-                return View(PartidoBuscado);
-                
             }
             catch
             {
